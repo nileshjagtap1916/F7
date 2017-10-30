@@ -3,25 +3,82 @@
  */
 namespace org.acme.sample
 
-asset SampleAsset identified by assetId {
-  o String assetId
-  --> SampleParticipant owner
-  o String value
+asset ContractAsset identified by lookupkeyhash {
+  o String lookupkeyhash
+  o String advertiser_id
+  o String advertiser_name
+  o String agency_name
+  o String plan_no
+  o String plan_name
+  o String io_no
+  o String media_code
+  o String media_name
+  o String menu_code
+  o String menu_name
+  o DateTime start_date
+  o DateTime end_date
+  o String order_type
+  o Double budget_amount
+  o String currency_code
+  o Double agency_fee_percent
+  o String platform_name
+  o String account_id
+  o String account_type
+  o Double total_fee_percent
+  o Double optimize_fee_percent
+  --> FusionSevenParticipant owner
+  //--> ClientParticipant client
+  //--> PartnerParticipant1 partner1
+  //--> PartnerParticipant2 partner2
+}
+asset TransactionAsset identified by lookupkeyhash {
+  o String lookupkeyhash
+  o String country_code
+  o DateTime date
+  o String account_id
+  o String account_name
+  o String advertiser_id
+  o String advertiser_name
+  o String campaign_id
+  o String campaign_name
+  o String currency_code
+  o Integer impressions
+  o Integer clicks
+  o Double cpc
+  o Double ctr
+  o Double ecpm
+  o Double media_cost
+  o Double data_cost
+  o Double total_cost
+  o Boolean is_valid default = false
+  --> FusionSevenParticipant owner
+  --> ClientParticipant client
+  --> PartnerParticipant partner
 }
 
-participant SampleParticipant identified by participantId {
-  o String participantId
-  o String firstName
-  o String lastName
+participant FusionSevenParticipant identified by participantid {
+  o String participantid
 }
 
-transaction SampleTransaction {
-  --> SampleAsset asset
-  o String newValue
+participant ClientParticipant identified by participantid {
+  o String participantid
+  o String client_code
+  o String client_name
+}
+
+participant PartnerParticipant identified by participantid {
+  o String participantid
+  o String partner_type
+  o String partner_code
+  o String partner_name
+}
+
+transaction ValidateTransaction {
+  --> TransactionAsset asset
+  
 }
 
 event SampleEvent {
-  --> SampleAsset asset
-  o String oldValue
-  o String newValue
+  --> TransactionAsset asset
+  o String message
 }

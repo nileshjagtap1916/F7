@@ -1,0 +1,12 @@
+query selectTransactionsWithTrueValidity {
+  description: "Select validated transactions"
+  statement:
+      SELECT org.acme.sample.TransactionAsset
+          WHERE (is_valid==true)
+}
+query selectTransactionsWithFalseValidity {
+  description: "Select non-validated transactions"
+  statement:
+      SELECT org.acme.sample.TransactionAsset
+          WHERE (is_valid==false)
+}
