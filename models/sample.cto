@@ -5,8 +5,8 @@ namespace org.acme.sample
 
 asset ContractAsset identified by lookupkeyhash {
   o String lookupkeyhash
-  o String advertiser_id
-  o String advertiser_name
+  //o String advertiser_id
+  //o String advertiser_name
   o String agency_name
   o String plan_no
   o String plan_name
@@ -26,10 +26,12 @@ asset ContractAsset identified by lookupkeyhash {
   o String account_type
   o Double total_fee_percent
   o Double optimize_fee_percent
-  --> FusionSevenParticipant owner
-  //--> ClientParticipant client
-  //--> PartnerParticipant1 partner1
-  //--> PartnerParticipant2 partner2
+  o String[] rowkeys
+  --> ClientParticipant client
+  --> PartnerParticipant publisher
+  --> PartnerParticipant DSP
+  --> PartnerParticipant Adserver optional
+  --> PartnerParticipant FusionSeven
 }
 asset TransactionAsset identified by lookupkeyhash {
   o String lookupkeyhash
@@ -50,26 +52,23 @@ asset TransactionAsset identified by lookupkeyhash {
   o Double media_cost
   o Double data_cost
   o Double total_cost
+  o String[] rowkeys
   o Boolean is_valid default = false
-  --> FusionSevenParticipant owner
   --> ClientParticipant client
-  --> PartnerParticipant partner
+  --> PartnerParticipant publisher
+  --> PartnerParticipant DSP
+  --> PartnerParticipant Adserver optional
+  --> PartnerParticipant FusionSeven
 }
 
-participant FusionSevenParticipant identified by participantid {
-  o String participantid
-}
-
-participant ClientParticipant identified by participantid {
-  o String participantid
+participant ClientParticipant identified by client_code {
   o String client_code
   o String client_name
 }
 
-participant PartnerParticipant identified by participantid {
-  o String participantid
-  o String partner_type
+participant PartnerParticipant identified by partner_code {
   o String partner_code
+  o String partner_type
   o String partner_name
 }
 
