@@ -33,7 +33,8 @@ asset ContractAsset identified by lookupkeyhash {
   --> PartnerParticipant Adserver optional
   --> PartnerParticipant FusionSeven
 }
-asset TransactionAsset identified by lookupkeyhash {
+asset TransactionAsset identified by transactionId {
+  o String transactionId
   o String lookupkeyhash
   o String country_code
   o DateTime date
@@ -73,11 +74,29 @@ participant PartnerParticipant identified by partner_code {
 }
 
 transaction ValidateTransaction {
-  --> TransactionAsset asset
+  o String lookupkeyhash
+  o String country_code
+  o DateTime date
+  o String account_id
+  o String account_name
+  o String advertiser_id
+  o String advertiser_name
+  o String campaign_id
+  o String campaign_name
+  o String currency_code
+  o Integer impressions
+  o Integer clicks
+  o Double cpc
+  o Double ctr
+  o Double ecpm
+  o Double media_cost
+  o Double data_cost
+  o Double total_cost
+  o String[] rowkeys
+  o String client
+  o String publisher
+  o String DSP
+  o String Adserver optional
+  o String FusionSeven
   
-}
-
-event SampleEvent {
-  --> TransactionAsset asset
-  o String message
 }
